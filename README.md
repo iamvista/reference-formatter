@@ -249,8 +249,8 @@ black .
 
 ## 📧 聯繫
 
-- 專案主頁: https://github.com/yourusername/reference-formatter
-- 問題回報: https://github.com/yourusername/reference-formatter/issues
+- 專案主頁: https://github.com/iamvista/reference-formatter
+- 問題回報: https://github.com/iamvista/reference-formatter/issues
 - Email: iamvista@gmail.com
 
 ## 💖 支持專案

@@ -1,0 +1,33 @@
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 測試和開發
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 臨時文件
+*.tmp
+*.bak

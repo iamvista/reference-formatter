@@ -1,0 +1,17 @@
+# Render 部署配置
+# 使用方法：將此檔案提交到 Git，在 Render 儀表板中連接你的倉庫
+
+services:
+  - type: web
+    name: reference-formatter
+    env: python
+    region: singapore  # 或 oregon, frankfurt（選擇離用戶近的）
+    plan: free  # 免費方案，可升級為 starter ($7/月)
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --config gunicorn.conf.py wsgi:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: FLASK_ENV
+        value: production
+    healthCheckPath: /

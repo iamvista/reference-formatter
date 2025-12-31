@@ -1,0 +1,37 @@
+/* 自定義樣式 */
+
+/* 確保表格在小螢幕上也能捲動 */
+.overflow-x-auto {
+    overflow-x: auto;
+}
+
+/* 自訂捲軸樣式（Webkit 瀏覽器） */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 按鈕禁用狀態 */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 平滑過渡效果 */
+* {
+    transition: background-color 0.2s ease;
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學術文獻格式整理工具 | Academic Reference Formatter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- 標題 -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">學術文獻格式整理工具</h1>
+            <p class="text-gray-600">支援 APA、MLA、Chicago、Harvard 等多種文獻格式</p>
+        </header>
+
+        <!-- 主要區域 -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <!-- 格式選擇器 -->
+            <div class="mb-6">
+                <label class="block text-lg font-semibold text-gray-700 mb-3">
+                    選擇文獻格式
+                </label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button class="format-btn active bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 hover:bg-blue-700" data-format="apa">
+                        APA 7th
+                    </button>
+                    <button class="format-btn bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-300" data-format="mla">
+                        MLA 9th
+                    </button>
+                    <button class="format-btn bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-300" data-format="chicago">
+                        Chicago 17th
+                    </button>
+                    <button class="format-btn bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-300" data-format="harvard">
+                        Harvard
+                    </button>
+                </div>
+            </div>
+
+            <!-- 輸入區域 -->
+            <div class="mb-6">
+                <label for="input-text" class="block text-lg font-semibold text-gray-700 mb-2">
+                    輸入文獻（每行一條，或用空行分隔）
+                </label>
+                <textarea
+                    id="input-text"
+                    rows="10"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="範例：&#10;Smith, J. (2020). Article title. Journal Name, 10(2), 123-145.&#10;&#10;或直接貼上 DOI：&#10;10.1038/nature12373"
+                ></textarea>
+            </div>
+
+            <!-- 按鈕區域 -->
+            <div class="flex gap-4 mb-6">
+                <button
+                    id="parse-btn"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
+                >
+                    解析並格式化
+                </button>
+                <button
+                    id="clear-btn"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-lg transition duration-200"
+                >
+                    清除
+                </button>
+            </div>
+
+            <!-- 載入中提示 -->
+            <div id="loading" class="hidden text-center py-8">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <p class="text-gray-600 mt-4">正在處理中...</p>
+            </div>
+        </div>
+
+        <!-- 結果區域 -->
+        <div id="results-container" class="hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">處理結果</h2>
+                <p class="text-gray-600 mb-4">共 <span id="result-count">0</span> 條文獻</p>
+
+                <!-- 結果表格 -->
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 px-4 py-2 text-left">#</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">狀態</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">原始輸入</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">
+                                    <span id="format-display">APA 7th</span> 格式
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-table">
+                            <!-- 結果將動態插入這裡 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 匯出選項 -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">匯出格式</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button
+                        data-format="txt"
+                        class="export-btn bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                    >
+                        下載純文字檔
+                    </button>
+                    <button
+                        data-format="docx"
+                        class="export-btn bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                    >
+                        下載 Word 文件
+                    </button>
+                    <button
+                        data-format="bibtex"
+                        class="export-btn bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                    >
+                        下載 BibTeX
+                    </button>
+                    <button
+                        data-format="html"
+                        class="export-btn bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                    >
+                        開啟 HTML
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

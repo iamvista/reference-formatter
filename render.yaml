@@ -14,4 +14,8 @@ services:
         value: 3.11.0
       - key: FLASK_ENV
         value: production
-    healthCheckPath: /
+      - key: SECRET_KEY
+        generateValue: true  # Render 會自動生成安全的密鑰
+      - key: CROSSREF_EMAIL
+        value: your-email@example.com  # 請在 Render 儀表板修改為您的 email
+    healthCheckPath: /health

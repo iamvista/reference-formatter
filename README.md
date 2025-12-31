@@ -259,7 +259,7 @@ black .
 - ⭐ 給專案一個 Star
 - 🐛 回報問題或建議
 - 🔀 提交 Pull Request
-- ☕ [請我喝杯咖啡](https://buymeacoffee.com/yourusername)
+- ☕ [請我喝杯咖啡](https://vista.im/coffee)
 
 ---
 

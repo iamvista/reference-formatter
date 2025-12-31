@@ -18,6 +18,11 @@ app = Flask(__name__)
 env = os.environ.get('FLASK_ENV', 'development')
 app.config.from_object(config[env])
 
+# 生產環境安全檢查
+if env == 'production':
+    if not app.config.get('SECRET_KEY') or app.config['SECRET_KEY'] == 'dev-secret-key-please-change-in-production':
+        raise ValueError("生產環境必須設定有效的 SECRET_KEY 環境變量！")
+
 # 初始化模組
 parser = ReferenceParser()
 api_client = APIClient()

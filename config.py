@@ -49,10 +49,6 @@ class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
 
-    # 確保設定了密鑰
-    if not os.environ.get('SECRET_KEY'):
-        raise ValueError("生產環境必須設定 SECRET_KEY 環境變量！")
-
 
 class TestingConfig(Config):
     """測試環境配置"""

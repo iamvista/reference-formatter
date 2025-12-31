@@ -251,7 +251,7 @@ black .
 
 - 專案主頁: https://github.com/yourusername/reference-formatter
 - 問題回報: https://github.com/yourusername/reference-formatter/issues
-- Email: your-email@example.com
+- Email: iamvista@gmail.com
 
 ## 💖 支持專案
 
